@@ -5,6 +5,7 @@ import os
 
 TARGET_URLS = [
     "https://orionshirt.com/",
+    "https://nvdteeshirt.com/",
     # "https://example.com/",
 ]
 
