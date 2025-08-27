@@ -2,11 +2,11 @@ name: Crawl Site
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # chạy mỗi 5 phút
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write   # 👈 thêm dòng này để cho phép push
+  contents: write
 
 jobs:
   crawl:
@@ -23,13 +23,18 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Run crawler
-        run: python crawler.py
+      - name: Run crawler and get filename
+        id: run-crawler
+        run: |
+          python crawler.py
+          FILE_NAME=$(cat last_file.txt)
+          echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
 
       - name: Commit & push results
+        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add latest.txt
-          git commit -m "Update latest.txt [skip ci]" || echo "No changes"
+          git add "${{ env.FILE_NAME }}"
+          git commit -m "Update ${{ env.FILE_NAME }} [skip ci]" || echo "No changes to commit"
           git push
