@@ -3,7 +3,10 @@ name: Crawl Site
 on:
   schedule:
     - cron: "*/10 * * * *"   # chạy mỗi 10 phút
-  workflow_dispatch:         # cho phép chạy tay
+  workflow_dispatch:
+
+permissions:
+  contents: write   # 👈 thêm dòng này để cho phép push
 
 jobs:
   crawl:
