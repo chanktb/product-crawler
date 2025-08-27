@@ -26,5 +26,17 @@
     {
         "url": "https://myfrogtees.com/",
         "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://sionteeshirt.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://techteesusa.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://geekteesus.com/",
+        "selector": ".woocommerce-LoopProduct-link"
     }
 ]
