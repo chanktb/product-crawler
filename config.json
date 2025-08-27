@@ -12,7 +12,19 @@
         "selector": ".product-small a.woocommerce-LoopProduct-link"
     },
     {
-        "url": "https://printiment.com/",
+        "url": "https://milkywayshirt.com/",
+        "selector": ".product-small a.woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://teeextra.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://tshirtnewusa.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://myfrogtees.com/",
         "selector": ".woocommerce-LoopProduct-link"
     }
 ]
