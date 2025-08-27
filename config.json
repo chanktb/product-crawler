@@ -5,7 +5,11 @@
     },
     {
         "url": "https://nvdteeshirt.com/",
-        "selector": "a[href*=\"/product/\"]"
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://2020trendingtees.com/",
+        "selector": ".product-small a.woocommerce-LoopProduct-link"
     },
     {
         "url": "https://printiment.com/",
