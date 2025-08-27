@@ -5,7 +5,7 @@
     },
     {
         "url": "https://nvdteeshirt.com/",
-        "selector": "p.product-title a.woocommerce-LoopProduct-link"
+        "selector": "a[href*=\"/product/\"]"
     },
     {
         "url": "https://printiment.com/",
