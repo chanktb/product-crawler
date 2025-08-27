@@ -30,8 +30,8 @@ def fetch_urls(url_data):
         return []
 
     links = []
-    # Sử dụng selector từ cấu hình
-    for a in soup.select(url_data['selector'])[:8]:
+    # Lấy tất cả các URL, không giới hạn
+    for a in soup.select(url_data['selector']):
         href = a.get("href")
         if href and href not in links:
             links.append(href)
@@ -65,13 +65,11 @@ if __name__ == "__main__":
     if not TARGET_URLS:
         exit(1)
 
-    # Vòng lặp chính để xử lý từng mục trong file config
     for url_data in TARGET_URLS:
         domain = urlparse(url_data['url']).netloc
         urls = fetch_urls(url_data)
         print(f"[{domain}] Found:", urls)
         filename = save_urls(domain, urls)
 
-    # Lưu tên file cuối cùng vào last_file.txt cho GitHub Actions
     with open("last_file.txt", "w") as f:
         f.write(filename)
