@@ -5,6 +5,10 @@
     },
     {
         "url": "https://nvdteeshirt.com/",
-        "selector": ".product-item a.product-loop-image"
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://printiment.com/",
+        "selector": ".product-small a"
     }
 ]
