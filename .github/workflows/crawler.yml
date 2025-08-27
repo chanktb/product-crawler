@@ -23,10 +23,12 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Run crawler and get filename
-        id: run-crawler
+      - name: Run crawler
+        run: python crawler.py
+
+      - name: Get filename and set environment variable
+        id: get-filename
         run: |
-          python crawler.py
           FILE_NAME=$(cat last_file.txt)
           echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
 
