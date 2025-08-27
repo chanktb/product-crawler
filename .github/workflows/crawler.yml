@@ -1,0 +1,32 @@
+name: Crawl Site
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # chạy mỗi 10 phút
+  workflow_dispatch:         # cho phép chạy tay
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run crawler
+        run: python crawler.py
+
+      - name: Commit & push results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add latest.txt
+          git commit -m "Update latest.txt [skip ci]" || echo "No changes"
+          git push
