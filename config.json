@@ -1,0 +1,10 @@
+[
+    {
+        "url": "https://orionshirt.com/",
+        "selector": ".product-small a.woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://nvdteeshirt.com/",
+        "selector": ".product-item a.product-loop-image"
+    }
+]
