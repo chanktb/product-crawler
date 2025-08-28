@@ -42,5 +42,33 @@
     {
         "url": "https://legendusashirt.com/",
         "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://teespix.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://fanaticity.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://eteeclothing.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://nowbestshirt.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://serenashirt.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://teeslocal.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://recitethis.com/shop/",
+        "selector": ".woocommerce-LoopProduct-link"
     }
 ]
