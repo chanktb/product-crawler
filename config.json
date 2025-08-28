@@ -73,7 +73,7 @@
     },
     {
         "url": "https://teeworksusa.com/",
-        "selector": "a[href*=\"/product/\"]"
+        "selector": "a.porto-tb-link[href*=".com/product/"]"
     },
     {
         "url": "https://dreameshirt.com/",
@@ -81,7 +81,7 @@
     },
     {
         "url": "https://meredpremium.com/",
-        "selector": ".woocommerce-LoopProduct-link"
+        "selector": ".product-small a.woocommerce-LoopProduct-link"
     },
     {
         "url": "https://berrylittles.com/",
