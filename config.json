@@ -45,7 +45,7 @@
     },
     {
         "url": "https://teespix.com/",
-        "selector": ".woocommerce-LoopProduct-link"
+        "selector": ".section .row.large-columns-4.medium-columns-3.small-columns-2.row-small.slider.row-slider.slider-nav-reveal a.woocommerce-LoopProduct-link"
     },
     {
         "url": "https://fanaticity.com/t-shirts/",
