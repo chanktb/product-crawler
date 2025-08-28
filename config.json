@@ -52,6 +52,10 @@
         "selector": ".woocommerce-LoopProduct-link"
     },
     {
+        "url": "https://fanaticity.com/graphic-t-shirt/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
         "url": "https://eteeclothing.com/",
         "selector": ".woocommerce-LoopProduct-link"
     },
