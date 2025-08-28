@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import os
 import json
 
-MAX_URLS = 200
+MAX_URLS = 300
 
 def load_config():
     """Tải cấu hình từ tệp config.json."""
@@ -76,10 +76,10 @@ if __name__ == "__main__":
         new_urls_count = save_urls(domain, urls)
         new_urls_summary[domain] = new_urls_count
 
-    with open("last_file.txt", "w") as f:
-        # Bạn có thể giữ hoặc xóa dòng này tùy vào nhu cầu
-        f.write("last_run_completed")
+    # Ghi tóm tắt vào last_file.txt
+    with open("last_file.txt", "w", encoding="utf-8") as f:
+        f.write("--- Summary of New URLs ---\n")
+        for domain, count in new_urls_summary.items():
+            f.write(f"{domain}: {count} new URLs added.\n")
 
-    print("\n--- Summary of New URLs ---")
-    for domain, count in new_urls_summary.items():
-        print(f"{domain}: {count} new URLs added.")
+    print("\n--- Summary saved to last_file.txt ---")
