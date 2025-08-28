@@ -38,5 +38,9 @@
     {
         "url": "https://geekteesus.com/",
         "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://legendusashirt.com/",
+        "selector": ".woocommerce-LoopProduct-link"
     }
 ]
