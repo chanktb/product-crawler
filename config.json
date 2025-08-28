@@ -81,7 +81,7 @@
     },
     {
         "url": "https://meredpremium.com/",
-        "selector": ".product-small a.woocommerce-LoopProduct-link"
+        "selector": ".row.large-columns-4.medium-columns-3.small-columns-2.row-small.slider.row-slider.slider-nav-reveal.slider-nav-push a.woocommerce-LoopProduct-link.woocommerce-loop-product__link"
     },
     {
         "url": "https://berrylittles.com/",
