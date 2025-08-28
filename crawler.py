@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import os
 import json
 
-MAX_URLS = 300
+MAX_URLS = 200
 
 def load_config():
     """Tải cấu hình từ tệp config.json."""
@@ -39,7 +39,7 @@ def fetch_urls(url_data):
     return links
 
 def save_urls(domain, new_urls):
-    """Lưu các URL vào tệp của domain tương ứng."""
+    """Lưu các URL vào tệp của domain tương ứng và trả về số URL mới."""
     filename = f"{domain}.txt"
 
     try:
@@ -58,37 +58,28 @@ def save_urls(domain, new_urls):
         f.write("\n".join(all_urls))
 
     print(f"[{domain}] Added {len(unique_new_urls)} new URLs. Total: {len(all_urls)}")
-    return filename
-
-def list_domains_and_counts(target_urls):
-    """
-    Liệt kê danh sách domain đã lưu và tổng số URL của từng domain.
-    """
-    print("\n--- Summary ---")
-    for url_data in target_urls:
-        domain = urlparse(url_data['url']).netloc
-        filename = f"{domain}.txt"
-        try:
-            with open(filename, "r", encoding="utf-8") as f:
-                urls = [line.strip() for line in f if line.strip()]
-                print(f"{domain}: {len(urls)} URLs")
-        except FileNotFoundError:
-            print(f"{domain}: File not found.")
+    # Trả về số lượng URL mới
+    return len(unique_new_urls)
 
 if __name__ == "__main__":
     TARGET_URLS = load_config()
     if not TARGET_URLS:
         exit(1)
 
+    new_urls_summary = {}
+
     # Vòng lặp chính để crawl và lưu URL
     for url_data in TARGET_URLS:
         domain = urlparse(url_data['url']).netloc
         urls = fetch_urls(url_data)
         print(f"[{domain}] Found:", urls)
-        filename = save_urls(domain, urls)
+        new_urls_count = save_urls(domain, urls)
+        new_urls_summary[domain] = new_urls_count
 
     with open("last_file.txt", "w") as f:
-        f.write(filename)
+        # Bạn có thể giữ hoặc xóa dòng này tùy vào nhu cầu
+        f.write("last_run_completed")
 
-    # Thêm dòng này để gọi hàm in kết quả
-    list_domains_and_counts(TARGET_URLS)
+    print("\n--- Summary of New URLs ---")
+    for domain, count in new_urls_summary.items():
+        print(f"{domain}: {count} new URLs added.")
