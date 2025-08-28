@@ -70,5 +70,21 @@
     {
         "url": "https://recitethis.com/shop/",
         "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://teeworksusa.com/",
+        "selector": "a[href*=\"/product/\"]"
+    },
+    {
+        "url": "https://dreameshirt.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://meredpremium.com/",
+        "selector": ".woocommerce-LoopProduct-link"
+    },
+    {
+        "url": "https://berrylittles.com/",
+        "selector": ".woocommerce-LoopProduct-link"
     }
 ]
