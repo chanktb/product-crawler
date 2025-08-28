@@ -57,7 +57,7 @@
     },
     {
         "url": "https://nowbestshirt.com/",
-        "selector": ".woocommerce-LoopProduct-link"
+        "selector": ".row.large-columns-5.medium-columns-3.small-columns-2.row-small.slider.row-slider.slider-nav-simple a.woocommerce-LoopProduct-link.woocommerce-loop-product__link"
     },
     {
         "url": "https://serenashirt.com/",
