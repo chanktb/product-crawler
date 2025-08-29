@@ -48,11 +48,11 @@
         "selector": ".section .row.large-columns-4.medium-columns-3.small-columns-2.row-small.slider.row-slider.slider-nav-reveal a.woocommerce-LoopProduct-link"
     },
     {
-        "url": "https://fanaticity.com/t-shirts/",
+        "url": "https://fanaticity.com/graphic-t-shirt/",
         "selector": ".woocommerce-LoopProduct-link"
     },
     {
-        "url": "https://fanaticity.com/graphic-t-shirt/",
+        "url": "https://fanaticity.com/t-shirts/",
         "selector": ".woocommerce-LoopProduct-link"
     },
     {
