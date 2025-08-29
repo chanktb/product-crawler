@@ -1,23 +1,23 @@
---- Summary of New URLs ---
-orionshirt.com: 0 new URLs added.
-nvdteeshirt.com: 0 new URLs added.
-2020trendingtees.com: 0 new URLs added.
-milkywayshirt.com: 0 new URLs added.
-teeextra.com: 0 new URLs added.
-tshirtnewusa.com: 0 new URLs added.
-myfrogtees.com: 0 new URLs added.
-sionteeshirt.com: 0 new URLs added.
-techteesusa.com: 0 new URLs added.
-geekteesus.com: 0 new URLs added.
-legendusashirt.com: 0 new URLs added.
-teespix.com: 0 new URLs added.
-fanaticity.com: 0 new URLs added.
-eteeclothing.com: 0 new URLs added.
-nowbestshirt.com: 0 new URLs added.
-serenashirt.com: 0 new URLs added.
-teeslocal.com: 0 new URLs added.
-recitethis.com: 0 new URLs added.
-teeworksusa.com: 0 new URLs added.
-dreameshirt.com: 0 new URLs added.
-meredpremium.com: 0 new URLs added.
-berrylittles.com: 0 new URLs added.
+--- Summary of URLs ---
+orionshirt.com: 0 new URLs added. Total 15 URLs.
+nvdteeshirt.com: 0 new URLs added. Total 76 URLs.
+2020trendingtees.com: 0 new URLs added. Total 32 URLs.
+milkywayshirt.com: 0 new URLs added. Total 32 URLs.
+teeextra.com: 0 new URLs added. Total 80 URLs.
+tshirtnewusa.com: 0 new URLs added. Total 16 URLs.
+myfrogtees.com: 0 new URLs added. Total 57 URLs.
+sionteeshirt.com: 0 new URLs added. Total 200 URLs.
+techteesusa.com: 0 new URLs added. Total 200 URLs.
+geekteesus.com: 0 new URLs added. Total 193 URLs.
+legendusashirt.com: 0 new URLs added. Total 300 URLs.
+teespix.com: 0 new URLs added. Total 300 URLs.
+fanaticity.com: 0 new URLs added. Total 250 URLs.
+eteeclothing.com: 0 new URLs added. Total 268 URLs.
+nowbestshirt.com: 0 new URLs added. Total 260 URLs.
+serenashirt.com: 0 new URLs added. Total 200 URLs.
+teeslocal.com: 0 new URLs added. Total 194 URLs.
+recitethis.com: 0 new URLs added. Total 19 URLs.
+teeworksusa.com: 0 new URLs added. Total 200 URLs.
+dreameshirt.com: 0 new URLs added. Total 8 URLs.
+meredpremium.com: 0 new URLs added. Total 208 URLs.
+berrylittles.com: 0 new URLs added. Total 8 URLs.
