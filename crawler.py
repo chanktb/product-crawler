@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import os
 import json
 
-MAX_URLS = 500
+MAX_URLS = 1000
 
 def load_config():
     """Tải cấu hình từ tệp config.json."""
