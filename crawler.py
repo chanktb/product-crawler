@@ -39,7 +39,7 @@ def fetch_urls(url_data):
     return links
 
 def save_urls(domain, new_urls):
-    """Lưu các URL vào tệp của domain tương ứng và trả về số URL mới."""
+    """Lưu các URL vào tệp của domain tương ứng và trả về số URL mới và tổng số URL."""
     filename = f"{domain}.txt"
 
     try:
@@ -58,28 +58,29 @@ def save_urls(domain, new_urls):
         f.write("\n".join(all_urls))
 
     print(f"[{domain}] Added {len(unique_new_urls)} new URLs. Total: {len(all_urls)}")
-    # Trả về số lượng URL mới
-    return len(unique_new_urls)
+    # Trả về cả số lượng URL mới và tổng số URL
+    return len(unique_new_urls), len(all_urls)
 
 if __name__ == "__main__":
     TARGET_URLS = load_config()
     if not TARGET_URLS:
         exit(1)
 
-    new_urls_summary = {}
+    # Lưu cả số lượng URL mới và tổng số URL
+    urls_summary = {}
 
     # Vòng lặp chính để crawl và lưu URL
     for url_data in TARGET_URLS:
         domain = urlparse(url_data['url']).netloc
         urls = fetch_urls(url_data)
         print(f"[{domain}] Found:", urls)
-        new_urls_count = save_urls(domain, urls)
-        new_urls_summary[domain] = new_urls_count
+        new_urls_count, total_urls_count = save_urls(domain, urls)
+        urls_summary[domain] = {'new_count': new_urls_count, 'total_count': total_urls_count}
 
     # Ghi tóm tắt vào last_file.txt
     with open("last_file.txt", "w", encoding="utf-8") as f:
-        f.write("--- Summary of New URLs ---\n")
-        for domain, count in new_urls_summary.items():
-            f.write(f"{domain}: {count} new URLs added.\n")
+        f.write("--- Summary of URLs ---\n")
+        for domain, counts in urls_summary.items():
+            f.write(f"{domain}: {counts['new_count']} new URLs added. Total {counts['total_count']} URLs.\n")
 
     print("\n--- Summary saved to last_file.txt ---")
