@@ -5,10 +5,10 @@ nvdteeshirt.com: 0 new URLs added. Total 292 URLs.
 milkywayshirt.com: 0 new URLs added. Total 144 URLs.
 teeextra.com: 0 new URLs added. Total 194 URLs.
 tshirtnewusa.com: 0 new URLs added. Total 62 URLs.
-myfrogtees.com: 15 new URLs added. Total 184 URLs.
+myfrogtees.com: 0 new URLs added. Total 184 URLs.
 sionteeshirt.com: 0 new URLs added. Total 411 URLs.
 techteesusa.com: 0 new URLs added. Total 503 URLs.
-geekteesus.com: 0 new URLs added. Total 465 URLs.
+geekteesus.com: 24 new URLs added. Total 489 URLs.
 legendusashirt.com: 0 new URLs added. Total 679 URLs.
 teespix.com: 0 new URLs added. Total 905 URLs.
 fanaticity.com: 0 new URLs added. Total 504 URLs.
@@ -19,5 +19,5 @@ teeslocal.com: 0 new URLs added. Total 387 URLs.
 recitethis.com: 0 new URLs added. Total 46 URLs.
 teeworksusa.com: 0 new URLs added. Total 547 URLs.
 dreameshirt.com: 0 new URLs added. Total 76 URLs.
-meredpremium.com: 31 new URLs added. Total 563 URLs.
+meredpremium.com: 88 new URLs added. Total 651 URLs.
 berrylittles.com: 0 new URLs added. Total 42 URLs.
