@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import os
 import json
+from datetime import datetime
+import pytz # Thêm thư viện pytz để xử lý múi giờ
 
 MAX_URLS = 1000
 
@@ -66,21 +68,30 @@ if __name__ == "__main__":
     if not TARGET_URLS:
         exit(1)
 
-    # Lưu cả số lượng URL mới và tổng số URL
     urls_summary = {}
 
-    # Vòng lặp chính để crawl và lưu URL
+    # Vòng lặp "kiên cường" hơn
     for url_data in TARGET_URLS:
-        domain = urlparse(url_data['url']).netloc
-        urls = fetch_urls(url_data)
-        print(f"[{domain}] Found:", urls)
-        new_urls_count, total_urls_count = save_urls(domain, urls)
-        urls_summary[domain] = {'new_count': new_urls_count, 'total_count': total_urls_count}
+        try:
+            domain = urlparse(url_data['url']).netloc
+            urls = fetch_urls(url_data)
+            print(f"[{domain}] Found:", urls)
+            new_urls_count, total_urls_count = save_urls(domain, urls)
+            urls_summary[domain] = {'new_count': new_urls_count, 'total_count': total_urls_count}
+        except Exception as e:
+            print(f"!!! LỖI NGHIÊM TRỌNG khi xử lý {url_data.get('url', 'URL không xác định')}: {e}")
+            continue
 
-    # Ghi tóm tắt vào last_file.txt
+    # Lấy thời gian hiện tại theo múi giờ Việt Nam (GMT+7)
+    vn_timezone = pytz.timezone('Asia/Ho_Chi_Minh')
+    timestamp = datetime.now(vn_timezone).strftime('%Y-%m-%d %H:%M:%S %Z')
+
+    # Ghi tóm tắt và timestamp vào last_file.txt
     with open("last_file.txt", "w", encoding="utf-8") as f:
         f.write("--- Summary of Last Product Crawl ---\n")
-        for domain, counts in urls_summary.items():
+        f.write(f"Generated at: {timestamp}\n") # <-- DÒNG MỚI THÊM VÀO
+        f.write("\n") # Thêm một dòng trống cho dễ đọc
+        for domain, counts in sorted(urls_summary.items()):
             f.write(f"{domain}: {counts['new_count']} new URLs added. Total {counts['total_count']} URLs.\n")
 
     print("\n--- Summary saved to last_file.txt ---")
