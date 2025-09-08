@@ -15,16 +15,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # ----- BƯỚC GỠ LỖI 1: KIỂM TRA TRẠNG THÁI BAN ĐẦU -----
-      - name: Log initial state of last_file.txt
-        run: |
-          echo "--- Checking state of last_file.txt BEFORE python script runs ---"
-          # Lệnh '|| true' để không bị lỗi nếu file chưa tồn tại
-          ls -l last_file.txt || true
-          echo "--- File content BEFORE: ---"
-          cat last_file.txt || echo "last_file.txt does not exist yet."
-          echo "--------------------------------"
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -35,15 +25,6 @@ jobs:
 
       - name: Run crawler
         run: python crawler.py
-
-      # ----- BƯỚC GỠ LỖI 2: KIỂM TRA TRẠNG THÁI SAU KHI CHẠY -----
-      - name: Log state after crawler script
-        run: |
-          echo "--- Checking state of last_file.txt AFTER python script ran ---"
-          ls -l last_file.txt
-          echo "--- File content AFTER: ---"
-          cat last_file.txt
-          echo "-------------------------------"
 
       - name: Check for meaningful changes (new URLs > 0)
         id: check_meaningful_changes
