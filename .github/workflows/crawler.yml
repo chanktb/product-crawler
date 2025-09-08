@@ -26,16 +26,10 @@ jobs:
       - name: Run crawler
         run: python crawler.py
 
-      # --- PHẦN THÊM MỚI BẮT ĐẦU TỪ ĐÂY ---
-
-      - name: Check for changes and trigger dispatch
-        if: success()
-        id: check_changes # Đặt ID cho bước này để tham chiếu sau
+      - name: Check for file changes
+        id: check_changes
         run: |
-          # Thêm file vào staging area để git diff có thể so sánh với HEAD
           git add last_file.txt
-          # Kiểm tra xem có sự thay đổi nào trong file đã được stage không
-          # git diff sẽ trả về exit code 0 nếu không có thay đổi, 1 nếu có thay đổi
           if ! git diff --cached --quiet -- last_file.txt; then
             echo "Changes detected in last_file.txt."
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -44,24 +38,47 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
           
-      - name: Dispatch to another repository
-        # Chỉ chạy bước này nếu bước 'check_changes' ở trên xác định là có thay đổi
+      # --- PHẦN LOGIC KÍCH HOẠT ĐƯỢC THAY THẾ BẰNG GITHUB CLI ---
+      - name: Check status and trigger image-crawler if idle
+        # Chỉ chạy bước này nếu có thay đổi
         if: steps.check_changes.outputs.changed == 'true'
+        id: trigger_dispatch # Đặt ID để lấy output cho Telegram
         env:
-          TARGET_OWNER: 'ktbihow' # <-- THAY TÊN USERNAME HOẶC ORGANIZATION CỦA REPO KIA
-          TARGET_REPO: 'image-crawler' # <-- THAY TÊN REPO KIA
-          GITHUB_PAT: ${{ secrets.KTBIHOW_PAT }} # <-- Token để gọi API
+          # Cần PAT có quyền 'repo' để kiểm tra và kích hoạt workflow khác
+          GH_TOKEN: ${{ secrets.KTBIHOW_PAT }}
+          TARGET_OWNER: 'ktbihow'
+          TARGET_REPO: 'image-crawler'
+          TARGET_WORKFLOW: 'crawler-image.yml' # Tên file workflow của repo đích
         run: |
-          echo "Triggering workflow in ${TARGET_OWNER}/${TARGET_REPO}"
-          curl -L \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ env.GITHUB_PAT }}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ env.TARGET_OWNER }}/${{ env.TARGET_REPO }}/dispatches \
-            -d '{"event_type":"new_product_available"}'
+          echo "Checking status of '${TARGET_WORKFLOW}' in ${TARGET_OWNER}/${TARGET_REPO}..."
+          
+          # Dùng 'gh run list' để kiểm tra các lần chạy đang 'in_progress' hoặc 'queued'
+          in_progress_runs=$(gh run list \
+            --repo "${TARGET_OWNER}/${TARGET_REPO}" \
+            --workflow "${TARGET_WORKFLOW}" \
+            --status "in_progress,queued" \
+            --limit 1 \
+            --json databaseId)
 
-      # --- KẾT THÚC PHẦN THÊM MỚI ---
+          # Nếu kết quả trả về không phải là mảng rỗng '[]', tức là có action đang chạy
+          if [[ "$in_progress_runs" != "[]" ]]; then
+            echo "Target workflow is busy. Skipping trigger."
+            echo "triggered=skipped" >> "$GITHUB_OUTPUT"
+            echo "reason=Target workflow is busy" >> "$GITHUB_OUTPUT"
+          else
+            echo "Target workflow is idle. Triggering now..."
+            # Dùng 'gh api' để gửi sự kiện repository_dispatch
+            gh api \
+              --method POST \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${TARGET_OWNER}/${TARGET_REPO}/dispatches" \
+              -f event_type='new_product_available'
+            echo "Trigger dispatch sent successfully."
+            echo "triggered=sent" >> "$GITHUB_OUTPUT"
+            echo "reason=New changes detected" >> "$GITHUB_OUTPUT"
+          fi
+
+      # --- KẾT THÚC PHẦN THAY THẾ ---
 
       - name: Send Log Content to Telegram
         if: always()
@@ -70,9 +87,11 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           LOG_CONTENT=$(cat last_file.txt)
+          # Giới hạn độ dài tin nhắn để tránh lỗi Telegram
+          TRUNCATED_LOG=$(echo "$LOG_CONTENT" | head -c 4000)
           curl -s -X POST https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage \
           -d chat_id=$TELEGRAM_CHAT_ID \
-          -d text="${LOG_CONTENT}" || echo "Lỗi khi gửi nội dung log!"
+          -d text="$TRUNCATED_LOG" || echo "Lỗi khi gửi nội dung log!"
 
       - name: Send Success Message to Telegram
         if: success()
@@ -80,7 +99,11 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: "✅ KTB Product Crawl - Done. Changes detected: ${{ steps.check_changes.outputs.changed }}" # Thêm thông tin thay đổi
+          # Cập nhật message để cung cấp thông tin chi tiết hơn
+          message: |
+            ✅ KTB Product Crawl - Done
+            Changes detected: ${{ steps.check_changes.outputs.changed }}
+            Trigger status: ${{ steps.trigger_dispatch.outputs.triggered }} (${{ steps.trigger_dispatch.outputs.reason }})
 
       - name: Send Failure Message to Telegram
         if: failure()
@@ -91,11 +114,10 @@ jobs:
           message: "❌ KTB Product Crawl - Fail."
           
       - name: Commit & push results
-        # Chỉ commit khi có sự thay đổi
         if: steps.check_changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add *.txt # Giữ nguyên hoặc chỉ định git add last_file.txt nếu muốn
+          git add *.txt
           git commit -m "Update URLs with new products [skip ci]"
           git push
