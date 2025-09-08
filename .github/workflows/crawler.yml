@@ -122,4 +122,5 @@ jobs:
             git commit -m "Update URLs with new products [skip ci]"
             git push
           else
-            ech
+            echo "No file changes to commit."
+          fi
