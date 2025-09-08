@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
     # Ghi tóm tắt vào last_file.txt
     with open("last_file.txt", "w", encoding="utf-8") as f:
-        f.write("--- Summary of URLs ---\n")
+        f.write("--- Summary of Last Product Crawl ---\n")
         for domain, counts in urls_summary.items():
             f.write(f"{domain}: {counts['new_count']} new URLs added. Total {counts['total_count']} URLs.\n")
 
