@@ -113,7 +113,8 @@ jobs:
           
       - name: Commit & push results
         run: |
-          git add last_file.txt
+          # Sửa lại thành 'git add *.txt' để commit tất cả các file txt đã thay đổi
+          git add *.txt
           if ! git diff --staged --quiet; then
             echo "Committing changes..."
             git config user.name "github-actions[bot]"
@@ -121,5 +122,4 @@ jobs:
             git commit -m "Update URLs with new products [skip ci]"
             git push
           else
-            echo "No file changes to commit."
-          fi
+            ech
