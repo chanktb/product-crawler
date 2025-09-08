@@ -1,23 +1,25 @@
 --- Summary of Last Product Crawl ---
-orionshirt.com: 0 new URLs added. Total 102 URLs.
-nvdteeshirt.com: 0 new URLs added. Total 584 URLs.
+Generated at: 2025-09-09 06:26:21 +07
+
 2020trendingtees.com: 0 new URLs added. Total 278 URLs.
-milkywayshirt.com: 0 new URLs added. Total 346 URLs.
-teeextra.com: 8 new URLs added. Total 447 URLs.
-tshirtnewusa.com: 0 new URLs added. Total 121 URLs.
-myfrogtees.com: 0 new URLs added. Total 327 URLs.
-sionteeshirt.com: 0 new URLs added. Total 672 URLs.
-techteesusa.com: 0 new URLs added. Total 1000 URLs.
+berrylittles.com: 0 new URLs added. Total 99 URLs.
+dreameshirt.com: 0 new URLs added. Total 217 URLs.
+eteeclothing.com: 65 new URLs added. Total 1000 URLs.
+fanaticity.com: 46 new URLs added. Total 1000 URLs.
 geekteesus.com: 18 new URLs added. Total 1000 URLs.
 legendusashirt.com: 100 new URLs added. Total 1000 URLs.
-teespix.com: 114 new URLs added. Total 1000 URLs.
-fanaticity.com: 51 new URLs added. Total 1000 URLs.
-eteeclothing.com: 65 new URLs added. Total 1000 URLs.
-nowbestshirt.com: 36 new URLs added. Total 693 URLs.
-serenashirt.com: 0 new URLs added. Total 1000 URLs.
-teeslocal.com: 0 new URLs added. Total 857 URLs.
-recitethis.com: 4 new URLs added. Total 141 URLs.
-teeworksusa.com: 28 new URLs added. Total 1000 URLs.
-dreameshirt.com: 0 new URLs added. Total 217 URLs.
 meredpremium.com: 0 new URLs added. Total 1000 URLs.
-berrylittles.com: 0 new URLs added. Total 99 URLs.
+milkywayshirt.com: 0 new URLs added. Total 346 URLs.
+myfrogtees.com: 0 new URLs added. Total 327 URLs.
+nowbestshirt.com: 36 new URLs added. Total 693 URLs.
+nvdteeshirt.com: 0 new URLs added. Total 584 URLs.
+orionshirt.com: 0 new URLs added. Total 102 URLs.
+recitethis.com: 4 new URLs added. Total 141 URLs.
+serenashirt.com: 0 new URLs added. Total 1000 URLs.
+sionteeshirt.com: 0 new URLs added. Total 672 URLs.
+techteesusa.com: 0 new URLs added. Total 1000 URLs.
+teeextra.com: 8 new URLs added. Total 447 URLs.
+teeslocal.com: 0 new URLs added. Total 857 URLs.
+teespix.com: 114 new URLs added. Total 1000 URLs.
+teeworksusa.com: 28 new URLs added. Total 1000 URLs.
+tshirtnewusa.com: 0 new URLs added. Total 121 URLs.
