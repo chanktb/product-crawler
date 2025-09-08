@@ -26,33 +26,39 @@ jobs:
       - name: Run crawler
         run: python crawler.py
 
-      - name: Check for file changes
-        id: check_changes
+      # ----- LOGIC KIỂM TRA ĐÃ ĐƯỢC THAY THẾ -----
+      - name: Check for meaningful changes (new URLs > 0)
+        id: check_meaningful_changes # Đổi ID để rõ ràng hơn
         run: |
-          git add last_file.txt
-          if ! git diff --cached --quiet -- last_file.txt; then
-            echo "Changes detected in last_file.txt."
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "Checking content of last_file.txt for new URLs..."
+          # Dùng grep để tìm các dòng có dạng "X new URLs added" với X là số từ 1-9 trở lên
+          # grep -E: Bật chế độ regular expression mở rộng
+          # '[1-9][0-9]* new URLs added': Mẫu tìm kiếm
+          #   [1-9]: Ký tự đầu tiên phải là số từ 1 đến 9
+          #   [0-9]*: Theo sau là 0 hoặc nhiều ký tự số từ 0 đến 9
+          # cờ -q (quiet): grep sẽ thoát ngay khi tìm thấy dòng đầu tiên và không in ra màn hình
+          if grep -E -q '[1-9][0-9]* new URLs added' last_file.txt; then
+            echo "Meaningful changes detected (new URLs found)."
+            echo "has_new_urls=true" >> "$GITHUB_OUTPUT"
           else
-            echo "No changes in last_file.txt."
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No new URLs found. All are '0 new URLs added'."
+            echo "has_new_urls=false" >> "$GITHUB_OUTPUT"
           fi
-          
-      # --- PHẦN LOGIC KÍCH HOẠT ĐƯỢC THAY THẾ BẰNG GITHUB CLI ---
+
+      # ----- KẾT THÚC THAY ĐỔI LOGIC KIỂM TRA -----
+
       - name: Check status and trigger image-crawler if idle
-        # Chỉ chạy bước này nếu có thay đổi
-        if: steps.check_changes.outputs.changed == 'true'
-        id: trigger_dispatch # Đặt ID để lấy output cho Telegram
+        # Chỉ chạy khi bước trên xác định là CÓ URL MỚI
+        if: steps.check_meaningful_changes.outputs.has_new_urls == 'true'
+        id: trigger_dispatch
         env:
-          # Cần PAT có quyền 'repo' để kiểm tra và kích hoạt workflow khác
           GH_TOKEN: ${{ secrets.KTBIHOW_PAT }}
           TARGET_OWNER: 'ktbihow'
           TARGET_REPO: 'image-crawler'
-          TARGET_WORKFLOW: 'crawler-image.yml' # Tên file workflow của repo đích
+          TARGET_WORKFLOW: 'crawler-image.yml'
         run: |
           echo "Checking status of '${TARGET_WORKFLOW}' in ${TARGET_OWNER}/${TARGET_REPO}..."
           
-          # Dùng 'gh run list' để kiểm tra các lần chạy đang 'in_progress' hoặc 'queued'
           in_progress_runs=$(gh run list \
             --repo "${TARGET_OWNER}/${TARGET_REPO}" \
             --workflow "${TARGET_WORKFLOW}" \
@@ -61,14 +67,12 @@ jobs:
             --limit 1 \
             --json databaseId)
 
-          # Nếu kết quả trả về không phải là mảng rỗng '[]', tức là có action đang chạy
           if [[ "$in_progress_runs" != "[]" ]]; then
             echo "Target workflow is busy. Skipping trigger."
             echo "triggered=skipped" >> "$GITHUB_OUTPUT"
             echo "reason=Target workflow is busy" >> "$GITHUB_OUTPUT"
           else
             echo "Target workflow is idle. Triggering now..."
-            # Dùng 'gh api' để gửi sự kiện repository_dispatch
             gh api \
               --method POST \
               -H "Accept: application/vnd.github+json" \
@@ -76,10 +80,8 @@ jobs:
               -f event_type='new_product_available'
             echo "Trigger dispatch sent successfully."
             echo "triggered=sent" >> "$GITHUB_OUTPUT"
-            echo "reason=New changes detected" >> "$GITHUB_OUTPUT"
+            echo "reason=New URLs available" >> "$GITHUB_OUTPUT"
           fi
-
-      # --- KẾT THÚC PHẦN THAY THẾ ---
 
       - name: Send Log Content to Telegram
         if: always()
@@ -88,7 +90,6 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           LOG_CONTENT=$(cat last_file.txt)
-          # Giới hạn độ dài tin nhắn để tránh lỗi Telegram
           TRUNCATED_LOG=$(echo "$LOG_CONTENT" | head -c 4000)
           curl -s -X POST https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage \
           -d chat_id=$TELEGRAM_CHAT_ID \
@@ -100,10 +101,9 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          # Cập nhật message để cung cấp thông tin chi tiết hơn
           message: |
             ✅ KTB Product Crawl - Done
-            Changes detected: ${{ steps.check_changes.outputs.changed }}
+            New URLs found: ${{ steps.check_meaningful_changes.outputs.has_new_urls }}
             Trigger status: ${{ steps.trigger_dispatch.outputs.triggered }} (${{ steps.trigger_dispatch.outputs.reason }})
 
       - name: Send Failure Message to Telegram
@@ -115,10 +115,16 @@ jobs:
           message: "❌ KTB Product Crawl - Fail."
           
       - name: Commit & push results
-        if: steps.check_changes.outputs.changed == 'true'
+        # Chỉ commit khi có sự thay đổi thực sự
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add *.txt
-          git commit -m "Update URLs with new products [skip ci]"
-          git push
+          # Kiểm tra lại xem file có thay đổi so với commit cuối không để tránh commit rỗng
+          git add last_file.txt
+          if ! git diff --staged --quiet; then
+            echo "Committing changes..."
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Update URLs with new products [skip ci]"
+            git push
+          else
+            echo "No file changes to commit."
+          fi
