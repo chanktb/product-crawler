@@ -1,23 +1,23 @@
 --- Summary of Last Product Crawl ---
-Generated at: 2025-09-09 16:13:14 +07
+Generated at: 2025-09-09 16:35:25 +07
 
-2020trendingtees.com: 0 new URLs added. Total 294 URLs.
+2020trendingtees.com: 8 new URLs added. Total 302 URLs.
 berrylittles.com: 0 new URLs added. Total 107 URLs.
 dreameshirt.com: 0 new URLs added. Total 233 URLs.
-eteeclothing.com: 0 new URLs added. Total 1000 URLs.
+eteeclothing.com: 62 new URLs added. Total 1000 URLs.
 fanaticity.com: 0 new URLs added. Total 1000 URLs.
 geekteesus.com: 0 new URLs added. Total 1000 URLs.
-legendusashirt.com: 30 new URLs added. Total 1000 URLs.
+legendusashirt.com: 47 new URLs added. Total 1000 URLs.
 meredpremium.com: 0 new URLs added. Total 1000 URLs.
 milkywayshirt.com: 0 new URLs added. Total 378 URLs.
 myfrogtees.com: 0 new URLs added. Total 352 URLs.
 nowbestshirt.com: 0 new URLs added. Total 693 URLs.
-nvdteeshirt.com: 16 new URLs added. Total 640 URLs.
+nvdteeshirt.com: 16 new URLs added. Total 656 URLs.
 orionshirt.com: 0 new URLs added. Total 110 URLs.
-recitethis.com: 4 new URLs added. Total 145 URLs.
-serenashirt.com: 0 new URLs added. Total 1000 URLs.
+recitethis.com: 3 new URLs added. Total 148 URLs.
+serenashirt.com: 80 new URLs added. Total 1000 URLs.
 sionteeshirt.com: 0 new URLs added. Total 814 URLs.
-techteesusa.com: 0 new URLs added. Total 1000 URLs.
+techteesusa.com: 3 new URLs added. Total 1000 URLs.
 teeextra.com: 0 new URLs added. Total 471 URLs.
 teeslocal.com: 0 new URLs added. Total 887 URLs.
 teespix.com: 0 new URLs added. Total 1000 URLs.
