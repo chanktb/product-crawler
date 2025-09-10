@@ -1,11 +1,11 @@
 --- Summary of Last Product Crawl ---
-Generated at: 2025-09-10 18:41:46 +07
+Generated at: 2025-09-10 18:54:48 +07
 
 2020trendingtees.com: 0 new URLs added. Total 365 URLs.
 berrylittles.com: 0 new URLs added. Total 115 URLs.
 dreameshirt.com: 0 new URLs added. Total 249 URLs.
 eteeclothing.com: 0 new URLs added. Total 1000 URLs.
-fanaticity.com: 0 new URLs added. Total 1000 URLs.
+fanaticity.com: 64 new URLs added. Total 1000 URLs.
 geekteesus.com: 0 new URLs added. Total 1000 URLs.
 legendusashirt.com: 0 new URLs added. Total 1000 URLs.
 meredpremium.com: 0 new URLs added. Total 1000 URLs.
@@ -20,6 +20,6 @@ sionteeshirt.com: 0 new URLs added. Total 814 URLs.
 techteesusa.com: 0 new URLs added. Total 1000 URLs.
 teeextra.com: 0 new URLs added. Total 488 URLs.
 teeslocal.com: 0 new URLs added. Total 980 URLs.
-teespix.com: 79 new URLs added. Total 1000 URLs.
+teespix.com: 46 new URLs added. Total 1000 URLs.
 teeworksusa.com: 0 new URLs added. Total 1000 URLs.
 tshirtnewusa.com: 0 new URLs added. Total 153 URLs.
