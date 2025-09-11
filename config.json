@@ -17,10 +17,6 @@
         "selector": ".woocommerce-LoopProduct-link"
     },
     {
-        "url": "https://sionteeshirt.com/",
-        "selector": ".woocommerce-LoopProduct-link"
-    },
-    {
         "url": "https://techteesusa.com/",
         "selector": ".woocommerce-LoopProduct-link"
     },
@@ -58,10 +54,6 @@
     },
     {
         "url": "https://teeslocal.com/",
-        "selector": ".woocommerce-LoopProduct-link"
-    },
-    {
-        "url": "https://recitethis.com/shop/",
         "selector": ".woocommerce-LoopProduct-link"
     },
     {
