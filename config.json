@@ -1,5 +1,10 @@
 [
     {
+        "url": "https://teeworksusa.com/",
+        "selector": "a.porto-tb-link",
+        "priority": true
+    },
+    {
         "url": "https://orionshirt.com/",
         "selector": ".product-small a.woocommerce-LoopProduct-link"
     },
@@ -74,10 +79,6 @@
     {
         "url": "https://recitethis.com/shop/",
         "selector": ".woocommerce-LoopProduct-link"
-    },
-    {
-        "url": "https://teeworksusa.com/",
-        "selector": "a.porto-tb-link"
     },
     {
         "url": "https://dreameshirt.com/",
