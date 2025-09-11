@@ -1,7 +1,19 @@
 --- Summary of Last Product Crawl ---
-Generated at: 2025-09-11 14:28:32 +07
+Generated at: 2025-09-11 14:36:17 +07
 
+berrylittles.com: 0 new URLs added. Total 123 URLs.
+dreameshirt.com: 0 new URLs added. Total 257 URLs.
+eteeclothing.com: 0 new URLs added. Total 1000 URLs.
+fanaticity.com: 0 new URLs added. Total 1000 URLs.
 geekteesus.com: 0 new URLs added. Total 1000 URLs.
-techteesusa.com: 4 new URLs added. Total 1000 URLs.
+legendusashirt.com: 0 new URLs added. Total 1000 URLs.
+meredpremium.com: 86 new URLs added. Total 1000 URLs.
+milkywayshirt.com: 0 new URLs added. Total 426 URLs.
+nowbestshirt.com: 6 new URLs added. Total 700 URLs.
+orionshirt.com: 0 new URLs added. Total 118 URLs.
+serenashirt.com: 0 new URLs added. Total 1000 URLs.
+techteesusa.com: 0 new URLs added. Total 1000 URLs.
 teeextra.com: 0 new URLs added. Total 523 URLs.
+teeslocal.com: 12 new URLs added. Total 1000 URLs.
+teespix.com: 0 new URLs added. Total 1000 URLs.
 teeworksusa.com: 0 new URLs added. Total 1000 URLs.
