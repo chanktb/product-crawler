@@ -14,15 +14,18 @@
     },
     {
         "url": "https://teeextra.com/",
-        "selector": ".woocommerce-LoopProduct-link"
+        "selector": ".woocommerce-LoopProduct-link",
+        "priority": true
     },
     {
         "url": "https://techteesusa.com/",
-        "selector": ".woocommerce-LoopProduct-link"
+        "selector": ".woocommerce-LoopProduct-link",
+        "priority": true
     },
     {
         "url": "https://geekteesus.com/",
-        "selector": ".woocommerce-LoopProduct-link"
+        "selector": ".woocommerce-LoopProduct-link",
+        "priority": true
     },
     {
         "url": "https://legendusashirt.com/",
