@@ -7,12 +7,13 @@ from datetime import datetime
 import pytz
 
 MAX_URLS = 1000
-# Ngưỡng để chạy toàn bộ
 FULL_RUN_THRESHOLD = 5 
 COUNTER_FILE = "run_counter.json"
 
+# --- Các hàm load_config, fetch_urls, save_urls, read_counter, write_counter giữ nguyên ---
+
 def load_config():
-    # ... (giữ nguyên hàm này)
+    """Tải cấu hình từ tệp config.json."""
     try:
         with open('config.json', 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -21,7 +22,7 @@ def load_config():
         return []
 
 def fetch_urls(url_data):
-    # ... (giữ nguyên hàm này)
+    """Tải và phân tích các URL từ một trang web."""
     headers = {"User-Agent": "Mozilla/5.0"}
     try:
         r = requests.get(url_data['url'], headers=headers, timeout=20)
@@ -38,7 +39,7 @@ def fetch_urls(url_data):
     return links
 
 def save_urls(domain, new_urls):
-    # ... (giữ nguyên hàm này)
+    """Lưu các URL vào tệp của domain tương ứng."""
     filename = f"{domain}.txt"
     try:
         with open(filename, "r", encoding="utf-8") as f:
@@ -67,6 +68,7 @@ def write_counter(count):
     with open(COUNTER_FILE, 'w') as f:
         json.dump({"priority_runs_count": count}, f, indent=2)
 
+
 if __name__ == "__main__":
     TARGET_URLS = load_config()
     if not TARGET_URLS:
@@ -74,35 +76,37 @@ if __name__ == "__main__":
 
     urls_summary = {}
     
-    # Đọc số lần chạy ưu tiên đã thực hiện
     run_count = read_counter()
     print(f"--- Current priority run count: {run_count}/{FULL_RUN_THRESHOLD} ---")
 
-    # Tách các URL
-    priority_url_data = None
+    # THAY ĐỔI 1: Tách thành 2 danh sách
+    priority_urls_data = []
     other_urls_data = []
     for url_data in TARGET_URLS:
         if url_data.get("priority"):
-            priority_url_data = url_data
+            priority_urls_data.append(url_data)
         else:
             other_urls_data.append(url_data)
 
-    # Quyết định chế độ chạy
     is_full_run = (run_count >= FULL_RUN_THRESHOLD)
 
-    # Luôn chạy trang priority trước
-    if priority_url_data:
+    # THAY ĐỔI 2: Luôn chạy vòng lặp cho TẤT CẢ các domain ưu tiên
+    print("\n--- Processing priority domains ---")
+    if not priority_urls_data:
+        print("No priority domains configured.")
+    
+    for url_data in priority_urls_data:
         try:
-            domain = urlparse(priority_url_data['url']).netloc
-            urls = fetch_urls(priority_url_data)
+            domain = urlparse(url_data['url']).netloc
+            urls = fetch_urls(url_data)
             new_urls, total_urls = save_urls(domain, urls)
             urls_summary[domain] = {'new_count': new_urls, 'total_count': total_urls}
         except Exception as e:
-            print(f"!!! LỖI NGHIÊM TRỌNG khi xử lý priority URL: {e}")
+            print(f"!!! LỖI NGHIÊM TRỌNG khi xử lý priority URL {url_data.get('url')}: {e}")
 
-    # Nếu là "full run" thì chạy các trang còn lại
+    # Nếu là "full run" thì chạy nốt các trang còn lại
     if is_full_run:
-        print("\n--- Threshold reached. Performing a full run for all domains. ---")
+        print(f"\n--- Threshold reached ({run_count}/{FULL_RUN_THRESHOLD}). Performing a full run. ---")
         for url_data in other_urls_data:
             try:
                 domain = urlparse(url_data['url']).netloc
@@ -112,14 +116,12 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"!!! LỖI NGHIÊM TRỌNG khi xử lý {url_data.get('url', 'URL không xác định')}: {e}")
         
-        # Reset bộ đếm sau khi chạy full run
-        write_counter(0)
+        write_counter(0) # Reset bộ đếm
     else:
         print("\n--- Priority-only run. Skipping other domains. ---")
-        # Tăng bộ đếm
-        write_counter(run_count + 1)
+        write_counter(run_count + 1) # Tăng bộ đếm
 
-    # Ghi tóm tắt (nếu có)
+    # Phần ghi tóm tắt giữ nguyên
     if urls_summary:
         vn_timezone = pytz.timezone('Asia/Ho_Chi_Minh')
         timestamp = datetime.now(vn_timezone).strftime('%Y-%m-%d %H:%M:%S %Z')
