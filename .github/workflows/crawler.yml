@@ -2,11 +2,19 @@ name: KTB Product Crawl
 
 on:
   schedule:
-    - cron: "*/5 0-16 * * *"
+    # Chạy mỗi 2 phút trong khoảng 0h-16h UTC (7h-23h giờ VN)
+    # Gợi ý: Nếu bạn muốn chạy mỗi 2 phút, hãy đổi thành "*/2 0-16 * * *"
+    - cron: "*/2 0-16 * * *"
   workflow_dispatch:
 
+# Quyền để workflow có thể commit và push code
 permissions:
   contents: write
+
+# Thêm concurrency để tránh các lần chạy chồng chéo
+# Lần chạy mới sẽ bị hủy nếu có một lần chạy cũ đang diễn ra
+concurrency:
+  group: ${{ github.workflow }}
 
 jobs:
   crawl:
@@ -24,6 +32,7 @@ jobs:
         run: pip install requests beautifulsoup4 pytz
 
       - name: Run crawler
+        # Giả sử tên file python của bạn là crawler.py
         run: python crawler.py
 
       - name: Check for meaningful changes (new URLs > 0)
@@ -38,7 +47,6 @@ jobs:
             echo "has_new_urls=false" >> "$GITHUB_OUTPUT"
           fi
 
-      # ... Các bước còn lại giữ nguyên ...
       - name: Check status and trigger image-crawler if idle
         if: steps.check_meaningful_changes.outputs.has_new_urls == 'true'
         id: trigger_dispatch
@@ -49,7 +57,6 @@ jobs:
           TARGET_WORKFLOW: 'crawler-image.yml'
         run: |
           echo "Triggering image-crawler..."
-          # (Logic kiểm tra và trigger giữ nguyên)
           in_progress_runs=$(gh run list --repo "${TARGET_OWNER}/${TARGET_REPO}" --workflow "${TARGET_WORKFLOW}" --status "in_progress" --status "queued" --limit 1 --json databaseId)
           if [[ "$in_progress_runs" != "[]" ]]; then
             echo "Target workflow is busy. Skipping trigger."
@@ -71,6 +78,7 @@ jobs:
         run: |
           LOG_CONTENT=$(cat last_file.txt)
           TRUNCATED_LOG=$(echo "$LOG_CONTENT" | head -c 4000)
+          # Sử dụng curl để gửi, || echo để không làm fail workflow nếu có lỗi
           curl -s -X POST https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage -d chat_id=$TELEGRAM_CHAT_ID -d text="$TRUNCATED_LOG" || echo "Lỗi khi gửi nội dung log!"
 
       - name: Send Success Message to Telegram
@@ -91,17 +99,19 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "❌ KTB Product Crawl - Fail."
-          
+      
+      # Bước commit được cập nhật để bao gồm cả run_counter.json
       - name: Commit & push results
         run: |
-          # Sửa lại thành 'git add *.txt' để commit tất cả các file txt đã thay đổi
-          git add *.txt
-          if ! git diff --staged --quiet; then
-            echo "Committing changes..."
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Update URLs with new products [skip ci]"
-            git push
-          else
-            echo "No file changes to commit."
-          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Thêm tất cả các file đã thay đổi (bao gồm *.txt và run_counter.json)
+          git add .
+          
+          # Chỉ commit nếu có thay đổi, nếu không thì bỏ qua để tránh lỗi
+          # `|| exit 0` sẽ ngăn workflow báo lỗi nếu không có gì để commit
+          git commit -m "📊 Update crawl data and counter [skip ci]" || exit 0
+          
+          # Đẩy thay đổi lên repo
+          git push
